@@ -8,7 +8,6 @@ class Solution {
             jobs[i][2] = profit[i];
         }
         
-        
         Arrays.sort(jobs, Comparator.comparingInt(a -> a[1]));
         int[] dp = new int[n + 1];
         for (int i = 0; i < n; i++) {
@@ -23,7 +22,7 @@ class Solution {
                     hi = mid;
                 }
             }
-            dp[i + 1] = Math.max(dp[i + 1], (jobs[lo][1] <= jobs[i][0] ? dp[lo + 1] : 0) + jobs[i][2]);
+            dp[i + 1] = Math.max(dp[i], (jobs[lo][1] <= jobs[i][0] ? dp[lo + 1] : 0) + jobs[i][2]);
         }
         return dp[n];
     }
