@@ -1,14 +1,7 @@
 class Solution {
     public int numberOfRounds(String loginTime, String logoutTime) {
-        String[] logins = loginTime.split(":");
-        int loginHour = Integer.parseInt(logins[0]);
-        int loginMin = Integer.parseInt(logins[1]);
-        int loginInMinutes = loginHour * 60 + loginMin;
-        
-        String[] logouts = logoutTime.split(":");
-        int logoutHour = Integer.parseInt(logouts[0]);
-        int logoutMin = Integer.parseInt(logouts[1]);
-        int logoutInMinutes = logoutHour * 60 + logoutMin;
+        int loginInMinutes = convertTimeToMinutes(loginTime);
+        int logoutInMinutes = convertTimeToMinutes(logoutTime);
         
         int round = 0;
         
@@ -34,5 +27,13 @@ class Solution {
         }
         
         return round < 0 ? 0 : round;
+    }
+    
+    private int convertTimeToMinutes(String time) {
+        String[] times = time.split(":");
+        int loginHour = Integer.parseInt(times[0]);
+        int loginMin = Integer.parseInt(times[1]);
+        int totalMinutes = loginHour * 60 + loginMin;
+        return totalMinutes;
     }
 }
