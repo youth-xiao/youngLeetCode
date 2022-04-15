@@ -28,34 +28,44 @@
  */
 
 
-// class Pair {
-//     NestedInteger nest;
-//     int weight;
-    
-//     Pair(NestedInteger nest, int weight) {
-//         this.nest = nest;
-//         this.weight = weight;
-//     }
-// }
+
 class Solution {
     public int depthSum(List<NestedInteger> nestedList) {
+        return dfs(nestedList, 1);
+    }
+    
+    private int dfs(List<NestedInteger> nestedList, int depth) {
         int total = 0;
-        int weight = 1;
-        Queue<NestedInteger> queue = new LinkedList<>();
-        queue.addAll(nestedList);
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                 NestedInteger ni = queue.poll();
-                if (ni.isInteger()) {
-                    total += (ni.getInteger() * weight);
-                } else {
-                    queue.addAll(ni.getList());
-                }
+        for (NestedInteger ni : nestedList) {
+            if (ni.isInteger()) {
+                total += (depth * ni.getInteger());
+            } else {
+                total += dfs(ni.getList(), depth + 1);
             }
-            weight++;
         }
         return total;
-        
     }
 }
+
+// class Solution {
+//     public int depthSum(List<NestedInteger> nestedList) {
+//         int total = 0;
+//         int weight = 1;
+//         Queue<NestedInteger> queue = new LinkedList<>();
+//         queue.addAll(nestedList);
+//         while (!queue.isEmpty()) {
+//             int size = queue.size();
+//             for (int i = 0; i < size; i++) {
+//                  NestedInteger ni = queue.poll();
+//                 if (ni.isInteger()) {
+//                     total += (ni.getInteger() * weight);
+//                 } else {
+//                     queue.addAll(ni.getList());
+//                 }
+//             }
+//             weight++;
+//         }
+//         return total;
+        
+//     }
+// }
