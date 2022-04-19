@@ -1,3 +1,31 @@
+//  class Solution {
+//     public List<String> alertNames(String[] keyName, String[] keyTime) {
+//         Map<String, TreeSet<Integer>> map = new HashMap<>();
+//         for (int i = 0; i < keyName.length; i++) {
+//             int time = parseTime(keyTime[i]);
+//             map.computeIfAbsent(keyName[i], s -> new TreeSet<>()).add(time);
+//         }
+//         TreeSet<String> names = new TreeSet<>();
+//         for (Map.Entry<String, TreeSet<Integer>> e : map.entrySet()) {
+//             List<Integer> list = new ArrayList<>(e.getValue());
+//             for (int i = 2; i < list.size(); i++) { // no need to start from 0 or 1
+//                 if (list.get(i) - list.get(i - 2) <= 60) {
+//                     names.add(e.getKey());
+//                     break;
+//                 }
+//             }  
+//         }
+//         return new ArrayList<>(names);
+//     }
+     
+//     private int parseTime(String s) {
+//         String[] times = s.split(":");
+//         int h = Integer.parseInt(times[0]);
+//         int min = Integer.parseInt(times[1]);
+//         return (h*60 + min);
+//     }
+//  }
+
  class Solution {
     public List<String> alertNames(String[] keyName, String[] keyTime) {
         Map<String, TreeSet<Integer>> map = new HashMap<>();
@@ -7,13 +35,17 @@
         }
         TreeSet<String> names = new TreeSet<>();
         for (Map.Entry<String, TreeSet<Integer>> e : map.entrySet()) {
-            List<Integer> list = new ArrayList<>(e.getValue());
-            for (int i = 2; i < list.size(); i++) { // no need to start from 0 or 1
-                if (list.get(i) - list.get(i - 2) <= 60) {
+            Deque<Integer> dq = new ArrayDeque<>();
+            for (int time : e.getValue()) {
+                dq.offer(time);
+                if (dq.peekLast() - dq.peek() > 60) {
+                    dq.poll();
+                }
+                if (dq.size() >= 3) {
                     names.add(e.getKey());
                     break;
                 }
-            }  
+            }
         }
         return new ArrayList<>(names);
     }
