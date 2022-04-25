@@ -15,20 +15,11 @@ class Solution {
             }
             sb.deleteCharAt(sb.length() - 1); // remove the last space
             if (sb.length() < maxWidth) { // if maxWidth has not achieved
-                if (wordCount == 1 || index == words.length) { // if current line can fit only one word
-                    
-                    while (sb.length() < maxWidth) {
+                if (wordCount == 1 || index == words.length) { // if current line can fit only one word or it is the last line
+                    while (sb.length() < maxWidth) { // simply add more space at the end until achieve maxWidth
                         sb.append(" ");
                     }
                     res.add(sb.toString());
-                    
-                    
-                    // int rightSpaceLen = maxWidth - sb.length(); // find number of space characters needed
-                    // for (int i = 0; i < rightSpaceLen; i++) { // simply append at the tail
-                    //     sb.append(" ");
-                    // }
-                    // String outcome = sb.toString();
-                    // res.add(outcome);
                 } else if ((maxWidth - charNumber) % (wordCount - 1) == 0 && index < words.length) { // if space can be evenly divided and the line is not the last line
                     int spaceLen = (maxWidth - charNumber) / (wordCount - 1);
                     String space = generateSpace(spaceLen);
@@ -41,7 +32,7 @@ class Solution {
                     // number of excess length that needs to be distributed differentially
                     int currDiff = maxWidth - charNumber;
                     int spaceCount = wordCount - 1;
-                    // the trick is to traverse backwards, using greedy method, to assign smaller space and then assign larger space, from right to left, and we need to assert string at the front, instead of appending
+                    // the TRICK: is to traverse backwards, using greedy method, to assign smaller space and then assign larger space, from right to left, and we need to assert string at the front, instead of appending
                     int wsIndex = wsLen - 1;
                     while (spaceCount > 0) {
                         int spaceLen = currDiff / spaceCount;
@@ -55,19 +46,14 @@ class Solution {
                     newSB.insert(0, ws[0]);
                     res.add(newSB.toString());
                 }
-                // else if (index == words.length) { // if it is the last line, simply add more space at the tail to achieve maxWidth
-                //     while (sb.length() < maxWidth) {
-                //         sb.append(" ");
-                //     }
-                //     res.add(sb.toString());
-                // }
-            } else {
+            } else { // the string perfectly fits the maxWidth, as separated by single space
                 res.add(sb.toString());
             }
         }
         return res;
     }
     
+    // helper function to generate different lengths of space strings as required
     private String generateSpace(int len) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < len; i++) {
