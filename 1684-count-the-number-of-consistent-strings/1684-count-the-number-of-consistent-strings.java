@@ -1,10 +1,9 @@
 class Solution {
     public int countConsistentStrings(String allowed, String[] words) {
-        Map<Character, Integer> allowedMap = new HashMap<>();
+        Set<Character> allowedSet = new HashSet<>();
         for (char c : allowed.toCharArray()) {
-            allowedMap.put(c, 1);
+            allowedSet.add(c);
         }
-        Set<Character> allowedSet = allowedMap.keySet();
         
         int count = 0;
         for (String word : words) {
