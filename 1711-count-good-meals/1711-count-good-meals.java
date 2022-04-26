@@ -12,6 +12,9 @@ class Solution {
         for (int i = 0; i < n; i++) {
             int val = deliciousness[i];
             for (int sum = 1; sum <= floor; sum <<= 1) {
+                // if a number with val can be a power of 2
+                // then it can be expressed as (sum - val)
+                // because sum is guaranteed to be power of 2
                 int count = map.getOrDefault(sum - val, 0);
                 pairs = (pairs + count) % MOD;
             }
