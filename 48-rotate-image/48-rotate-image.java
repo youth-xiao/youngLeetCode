@@ -27,7 +27,7 @@ class Solution {
         }
         
         for (int i = 0; i < m; i++) {
-            for (int j = 0; j < i; j++) {
+            for (int j = 0; j < i; j++) { // 注意这里是j < i, 如果是j < m, 那么算到后半部分，又翻转回去了，等于啥也没做
                 int temp = matrix[i][j];
                 matrix[i][j] = matrix[j][i];
                 matrix[j][i] = temp;
