@@ -6,19 +6,24 @@ class Solution {
             int interval = light[1];
             int start = pos - interval;
             int end = pos + interval + 1;
+            // 用正数标记起点个数
             treemap.put(start, treemap.getOrDefault(start, 0) + 1);
+            // 用负数标记终点个数
+            // 之所以用负数标记右边界 是因为我们希望总是返回最小的边界点
             treemap.put(end, treemap.getOrDefault(end, 0) - 1);
         }
         
-        int bright = 0;
+        int bright = 0; // 一个bright表示一个强度单位
         int maxBright = 0;
-        int res = 0;
+        int res = 0; // 最强光强的最左边的位置
         
-        for (int bound : treemap.keySet()) {
-            bright += treemap.get(bound);
+        // 因为用treemap存了起点和终点，会进行自动排序(natural order, ascending)
+        for (int bound : treemap.keySet()) { // 遍历光照的边界点, 从左到右
+            // treemap.get(bound): 得到的是该位置被几盏灯照射
+            bright += treemap.get(bound); // 因为起点的value是正数 so maxBright will always favor the left side than the right side
             if (bright > maxBright) {
                 maxBright = bright;
-                res = bound;
+                res = bound; // due the property that has been discussed on line 11, 12 and 23, the res will always record the left-most position that gets the most light
             }
         }
         
