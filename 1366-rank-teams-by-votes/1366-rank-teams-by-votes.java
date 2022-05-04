@@ -13,6 +13,8 @@ class Solution {
             }
         }
         
+        // 直接把所有characters提取出来做排序可以更快
+        // 不需要用priority queue 去存map.entry
         List<Character> list = new ArrayList<>(map.keySet());
         Collections.sort(list, (a, b) -> {
             for (int i = 0; i < n; i++) {
