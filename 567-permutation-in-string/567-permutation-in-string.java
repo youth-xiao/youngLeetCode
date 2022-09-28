@@ -15,6 +15,7 @@ class Solution {
         
         if (Arrays.equals(map1, map2)) return true;
         
+        // now basically iterate s2 and map2, increment and decrement when sliding
         for (int i = len1; i < len2; i++) {
             map2[s2.charAt(i) - 'a']++;
             map2[s2.charAt(i - len1) - 'a']--;
