@@ -51,7 +51,8 @@ class Solution {
             }
         }
         
-        sb.append(bulls).append('A').append(cows).append('B');
-        return sb.toString();
+        // sb.append(bulls).append('A').append(cows).append('B');
+        // return sb.toString();
+        return bulls + "A" + cows + "B";
     }
 }
