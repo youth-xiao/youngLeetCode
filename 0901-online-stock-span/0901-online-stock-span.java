@@ -9,7 +9,8 @@ class StockSpanner {
     }
     
     public int next(int price) {
-        int w = 1;
+        int w = 1; // 每一轮 w都会被重置为1
+        // prices与weights同时进退，所以prices的元素与其对应的weights的位置是一样的
         while (!prices.isEmpty() && prices.peek() <= price) {
             prices.pop();
             w += weights.pop();
