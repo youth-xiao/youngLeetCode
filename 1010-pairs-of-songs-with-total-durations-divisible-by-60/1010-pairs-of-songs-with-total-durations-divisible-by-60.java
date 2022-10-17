@@ -14,7 +14,7 @@ class Solution {
                 long size = map.get(rem);
                 pairs += size * (size - 1) / 2;
             } else {
-                pairs += map.get(rem) * map.getOrDefault(60 - rem, 0);
+                pairs += (long) map.get(rem) * map.getOrDefault(60 - rem, 0);
             }
         }
         
