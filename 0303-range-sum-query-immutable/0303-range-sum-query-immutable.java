@@ -18,7 +18,7 @@ class NumArray {
         if (left == 0) {
             return prefixSum[right];
         }
-        return prefixSum[right] - prefixSum[left - 1];
+        return prefixSum[right] - prefixSum[left - 1]; // because the range is inclusive, so we shouldn't extract prefixSum[left], but its previous one.
         
     }
 }
