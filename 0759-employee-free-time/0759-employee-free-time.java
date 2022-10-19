@@ -14,23 +14,47 @@ class Interval {
 */
 
 class Solution {
-    public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
-        List<Interval> result = new ArrayList<>();
-        List<Interval> timeline = new ArrayList<>();
-        schedule.forEach(e -> timeline.addAll(e));
-        Collections.sort(timeline, ((a, b) -> a.start - b.start));
+//     public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
+//         List<Interval> result = new ArrayList<>();
+//         List<Interval> timeline = new ArrayList<>();
+//         schedule.forEach(e -> timeline.addAll(e));
+//         Collections.sort(timeline, ((a, b) -> a.start - b.start));
         
-        Interval curr = timeline.get(0);
-        for (Interval i : timeline) {
-            if (curr.end < i.start) { // 完全不重合
-                result.add(new Interval(curr.end, i.start));
-                curr = i; // update pointer to the next valid interval
-            } else { // curr.end >= i.start 重合了
-                if (curr.end < i.end) { // 特殊情况:当前interval结束得比下一个interval早
-                    curr = i; // 仍然需要更新interval(向右找最晚结束的时间点)
+//         Interval curr = timeline.get(0);
+//         for (Interval i : timeline) {
+//             if (curr.end < i.start) { // 完全不重合
+//                 result.add(new Interval(curr.end, i.start));
+//                 curr = i; // update pointer to the next valid interval
+//             } else { // curr.end >= i.start 重合了
+//                 if (curr.end < i.end) { // 特殊情况:当前interval结束得比下一个interval早
+//                     curr = i; // 仍然需要更新interval(向右找最晚结束的时间点)
+//                 }
+//             }
+//         }
+//         return result;
+//     }
+    
+    public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
+        List<Interval> res = new ArrayList<>();
+        List<Interval> times = new ArrayList<>();
+        for (List<Interval> intervals : schedule) {
+            times.addAll(intervals);
+        }
+        Collections.sort(times, ((a, b) -> (a.start - b.start)));
+        
+        Interval pointer = times.get(0);
+        
+        for (Interval interval : times) {
+            if (pointer.end < interval.start) {
+                res.add(new Interval(pointer.end, interval.start));
+                pointer = interval;
+            } else {
+                if (interval.end > pointer.end) {
+                    pointer = interval;
                 }
             }
         }
-        return result;
+        
+        return res;
     }
 }
