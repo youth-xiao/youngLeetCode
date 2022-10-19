@@ -5,7 +5,7 @@ class LRUCache {
     
     public LRUCache(int capacity) {
         CAPACITY = capacity;
-        map = new LinkedHashMap<Integer, Integer>(capacity, 0.75f, true) {
+        map = new LinkedHashMap<Integer, Integer>((int)(capacity / 0.75 + 1), 0.75f, true) {
             protected boolean removeEldestEntry(Map.Entry eldest) {
                 return size() > CAPACITY;
             }
