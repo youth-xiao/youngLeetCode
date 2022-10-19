@@ -10,12 +10,14 @@
         TreeSet<String> names = new TreeSet<>();
         for (Map.Entry<String, TreeSet<Integer>> e : map.entrySet()) {
             List<Integer> list = new ArrayList<>(e.getValue()); // we have to convert the tree set to list first in order to use get().
-            for (int i = 2; i < list.size(); i++) { // no need to start from 0 or 1, because even the previous two times are very close, it doesn't break the rule. We just need to compare the first one and the last one within a frame containing three time points
-                if (list.get(i) - list.get(i - 2) <= 60) {
-                    names.add(e.getKey());
-                    break; // when we find one exception, we don't need to see if there are other invalid entried afterwards for this employee
-                }
-            }  
+            if (list.size() >= 3) {
+                for (int i = 2; i < list.size(); i++) { // no need to start from 0 or 1, because even the previous two times are very close, it doesn't break the rule. We just need to compare the first one and the last one within a frame containing three time points
+                    if (list.get(i) - list.get(i - 2) <= 60) {
+                        names.add(e.getKey());
+                        break; // when we find one exception, we don't need to see if there are other invalid entried afterwards for this employee
+                    }
+                }  
+            }
         }
         return new ArrayList<>(names); // same here, we need to return a list not a tree set
     }
