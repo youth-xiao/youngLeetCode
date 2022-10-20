@@ -12,14 +12,14 @@ class Solution {
         if (loginRemainder != 0) {
             newLoginInMinutes = loginInMinutes / 15 * 15 + 15;
         }
+        
         int logoutRemainder = logoutInMinutes % 15;
         if (logoutRemainder != 0) {
             newLogoutInMinutes = logoutInMinutes / 15 * 15;
         }
         
         if (loginInMinutes <= logoutInMinutes) { // same day
-            int diff = newLogoutInMinutes - newLoginInMinutes;
-            round = diff / 15;
+            round = (newLogoutInMinutes - newLoginInMinutes) / 15;
         } else { // across two days
             int roundFirstDay = ((24 * 60) - loginInMinutes) / 15;
             int roundSecondDay = logoutInMinutes / 15;
