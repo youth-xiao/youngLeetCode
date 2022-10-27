@@ -1,10 +1,10 @@
 class Solution {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        Set<String> wordSet = new HashSet<>(wordList);
-        if (wordSet.size() == 0 || !wordSet.contains(endWord)) {
+        Set<String> wordSet = new HashSet<>(wordList); // eliminate possible duplicates
+        if (wordSet.size() == 0 || !wordSet.contains(endWord)) { // if wordSet doesn't contain endWord, no need to find the ladder at all
             return 0;
         }
-        wordSet.remove(beginWord);
+        // wordSet.remove(beginWord); // need to remove beginWord from wordSet, because 
         Queue<String> queue = new LinkedList<>();
         queue.add(beginWord);
         Set<String> visited = new HashSet<>();
