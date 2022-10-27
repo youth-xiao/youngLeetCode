@@ -4,10 +4,9 @@ class Solution {
         if (wordSet.size() == 0 || !wordSet.contains(endWord)) { // if wordSet doesn't contain endWord, no need to find the ladder at all
             return 0;
         }
-        // wordSet.remove(beginWord); // need to remove beginWord from wordSet, because 
-        Queue<String> queue = new LinkedList<>();
+        Queue<String> queue = new LinkedList<>(); // this queue is for BFS
         queue.add(beginWord);
-        Set<String> visited = new HashSet<>();
+        Set<String> visited = new HashSet<>(); // use visited set to avoid repeating same steps and avoid TLE
         visited.add(beginWord);
         
         int steps = 1; // including beginWord itself
@@ -15,7 +14,7 @@ class Solution {
             int currSize = queue.size();
             for (int i = 0; i < currSize; i++) {
                 String currWord = queue.poll();
-                if (changeOneLetter(currWord, endWord, wordSet, visited, queue)) {
+                if (changeOneLetter(currWord, endWord, wordSet, visited, queue)) { // reached the endWord
                     return steps + 1;
                 }
             }
@@ -29,20 +28,20 @@ class Solution {
         for (int i = 0; i < wordArray.length; i++) {
             char oldChar = wordArray[i];
             for (char k = 'a'; k <= 'z'; k++) {
-                if (k == oldChar) continue;
+                if (k == oldChar) continue; // don't need to do replacement for the same char
                 wordArray[i] = k;
                 String newWord = String.valueOf(wordArray);
-                if (wordSet.contains(newWord)) {
+                if (wordSet.contains(newWord)) { // check this condition first of all
                     if (newWord.equals(endWord)) {
                         return true;
                     }
-                    if (!visited.contains(newWord)) {
+                    if (!visited.contains(newWord)) { // also need to remember check this before adding, otherwise TLE
                         queue.add(newWord);
                         visited.add(newWord);
                     }
                 }
             }
-            wordArray[i] = oldChar;
+            wordArray[i] = oldChar; // backtracking
         }
         return false;
     }
