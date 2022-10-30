@@ -65,28 +65,26 @@ class Solution {
         while (!map.containsKey(p) || !map.containsKey(q)) {
             TreeNode node = stack.pop();
             if (node.left != null) {
-                map.put(node.left, node);
                 stack.push(node.left);
+                map.put(node.left, node);
             }
             if (node.right != null) {
-                map.put(node.right, node);
                 stack.push(node.right);
+                map.put(node.right, node);
             }
         }
         
-        List<TreeNode> list = new ArrayList<>();
-        
-        TreeNode curr = p;
-        while (curr != null) {
-            list.add(curr);
-            curr = map.get(curr);
+        List<TreeNode> path = new ArrayList<>();
+        while (p != null) {
+            path.add(p);
+            p = map.get(p);
         }
         
-        TreeNode next = q;
-        while (!list.contains(next)) {
-            next = map.get(next);
+        while (!path.contains(q)) {
+            q = map.get(q);
         }
-        return next;
+        
+        return q;
     }
 }
 
