@@ -27,67 +27,38 @@
 // }
 
 
-
 class Solution {
-    // public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-    //     Stack<TreeNode> stack = new Stack<>();
-    //     HashMap<TreeNode, TreeNode> parentMap = new HashMap<>(); // 用map来记录当前node和她的父母
-    //     stack.push(root);
-    //     parentMap.put(root, null);
-    //     while (!parentMap.containsKey(p) || !parentMap.containsKey(q)) { // 这个loop的功能就是找到p、q的位置
-    //         TreeNode node = stack.pop();
-    //         if (node.left != null) { // 一直找 要么在叶子前找到 要么一直找到叶子
-    //             stack.push(node.left);
-    //             parentMap.put(node.left, node);
-    //         }
-    //         if (node.right != null) {
-    //             stack.push(node.right);
-    //             parentMap.put(node.right, node);
-    //         }
-    //     }
-    //     List<TreeNode> ancestor = new ArrayList<>();
-    //     while (p != null) { // 把p节点到root的路径遍历一遍 从下往上
-    //         ancestor.add(p);
-    //         p = parentMap.get(p); // update p node to its parent node
-    //     }
-    //     while (!ancestor.contains(q)) { // 再在ancestor的pool里 从下往上找common ancestor
-    //         q = parentMap.get(q); // 如果找不到 就更新q（更新到q的父母）
-    //     }
-    //     return q;
-    // }
-    
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        Stack<TreeNode> stack = new Stack<>();
-        Map<TreeNode, TreeNode> map = new HashMap<>();
+        Stack<TreeNode> stack = new Stack<>(); // Notice: we use this stack only during line 37-47. 
+        HashMap<TreeNode, TreeNode> parentMap = new HashMap<>(); // 用map来记录当前node和她的父母
         stack.push(root);
-        map.put(root, null);
-        
-        while (!map.containsKey(p) || !map.containsKey(q)) {
+        parentMap.put(root, null);
+        // 从上往下遍历！！！
+        while (!parentMap.containsKey(p) || !parentMap.containsKey(q)) { // 这个loop的功能就是找到p、q的位置
             TreeNode node = stack.pop();
-            if (node.left != null) {
+            if (node.left != null) { // 一直找 要么在叶子前找到 要么一直找到叶子
                 stack.push(node.left);
-                map.put(node.left, node);
+                parentMap.put(node.left, node);
             }
             if (node.right != null) {
                 stack.push(node.right);
-                map.put(node.right, node);
+                parentMap.put(node.right, node);
             }
         }
-        
-        List<TreeNode> path = new ArrayList<>();
-        while (p != null) {
-            path.add(p);
-            p = map.get(p);
+        // we don't need to use stack anymore, because it only serves when we try to traverse to find the positions of p and q.
+        // KEY POINT: 从下往上遍历！！！
+        List<TreeNode> ancestor = new ArrayList<>();
+        while (p != null) { // 把p节点到root的路径遍历一遍 从下往上
+            ancestor.add(p);
+            p = parentMap.get(p); // update p node to its parent node
         }
-        
-        while (!path.contains(q)) {
-            q = map.get(q);
+        // this while loop goes on until the path of p and q converge!!! when it converges, the point of convergement is the lowest common ancestor (we can ensure this is the lowest one because we iterate from bottom to top, and stop the search once converges)
+        while (!ancestor.contains(q)) { // 再在ancestor的pool里 从下往上找common ancestor
+            q = parentMap.get(q); // 如果找不到 就更新q（更新到q的父母）
         }
-        
         return q;
     }
 }
-
 
 
 
