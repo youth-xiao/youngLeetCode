@@ -16,7 +16,7 @@
 class Solution {
     private int max = Integer.MIN_VALUE;
     public int maxPathSum(TreeNode root) {
-        helper(root);
+        helper(root); // 不能直接return helper(root) 因为helper function return的是substree的maxSum，不是整体（包括root）的！！！
         return max;
     }
     
