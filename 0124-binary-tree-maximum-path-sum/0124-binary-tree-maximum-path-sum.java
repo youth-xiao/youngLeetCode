@@ -22,9 +22,15 @@ class Solution {
     
     private int helper(TreeNode root) {
         if (root == null) return 0;
-        int left = helper(root.left);
-        int right = helper(root.right);
+        int left = helper(root.left); // left subtree recursion
+        int right = helper(root.right); // right subtree recursion
+        // currMax: choose from 3 options:
+        // 1. root + left-subtree (at least left-subtree is not negative)
+        // 2. root + right-subtree (at least right-subtree is not negative)
+        // 3. just root (both left and right subtrees have negative sum)
         int currMax = Math.max(root.val, Math.max(left + root.val, right + root.val));
+        // actually the 4th option is: root + left-subtree + right-subtree
+        // 之所以分行写是因为一行code比较4个选择 不容易看懂
         max = Math.max(max, Math.max(currMax, left + right + root.val));
         return currMax;
     }
