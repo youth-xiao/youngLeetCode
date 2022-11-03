@@ -8,7 +8,6 @@ class Solution {
             for (int j = 0; j < n; j++) {
                 if (grid[i][j] == 1) {
                     int area = islandDFS(grid, i, j, index);
-                    // singleLargestIsland = Math.max(singleLargestIsland, area);
                     areaMap.put(index, area);
                     index++;
                 }
@@ -24,9 +23,16 @@ class Solution {
                 if (grid[i][j] == 0) {
                     Set<Integer> set = helper(grid, i, j, areaMap);
                     if (set.size() == 0) continue;
-                    largeIslandMax = Math.max(largeIslandMax, set.stream().map(item -> areaMap.get(item)).reduce(Integer::sum).orElse(0) + 1);
-
-                    // largeIslandMax = Math.max(largeIslandMax, Math.max(newArea, singleLargestIsland));
+                    int sum = 0;
+                    for (int k : set) {
+                        if (areaMap.containsKey(k)) {
+                            sum += areaMap.get(k);
+                        }
+                    }
+                    sum++;
+                    
+                    largeIslandMax = Math.max(largeIslandMax, sum);
+                    // largeIslandMax = Math.max(largeIslandMax, set.stream().map(item -> areaMap.get(item)).reduce(Integer::sum).orElse(0) + 1);
                 }
             }
         }
