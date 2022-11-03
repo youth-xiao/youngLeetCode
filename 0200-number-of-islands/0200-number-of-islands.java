@@ -16,7 +16,9 @@ class Solution {
         return i >= 0 && i < grid.length && j >= 0 && j < grid[0].length;
     }
     
+    // for this question, we just need to count then number of islands, not the actual area, therefore we don't need to return anything
     private void dfs(char[][] grid, int i, int j) {
+        // remember to include grid[i][j] != '1'
         if (!withinBound(grid, i, j) || grid[i][j] != '1') return;
         grid[i][j] = '2';
         dfs(grid, i + 1, j);
